@@ -3,7 +3,10 @@ import '../css/app.css'; // Необходимо для подключения T
 
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
+import { useRoute } from '../../vendor/tightenco/ziggy';
 //import Layout from '@/Layouts/Layout'; // На начальном этапе это нужно закомментировать, если не нужны Лейауты
+
+const route = useRoute();
 
 createInertiaApp({
     title: title => `LAREACT | ${title}`, // Это нужно для динимечского изменения титла через компонент Head. Если не нужно - можно отключить.
@@ -16,6 +19,7 @@ createInertiaApp({
         return page;
     },
     setup ({ el, App, props }) {
+        window.route = route;
         createRoot(el).render(<App { ...props } />);
     },
 });

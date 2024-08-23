@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\Faux\RegisterRequest;
+use App\Http\Requests\Auth\Calendar\RegisterRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,10 +15,10 @@ class RegisterController extends Controller
     public function register()
     {
         if (Auth::check()) {
-            return redirect(route('admin.faux.index'));
+            return redirect(route('calendar.index'));
         }
 
-        return view('auth.register');
+        return inertia('Auth/Register');
     }
 
     /**

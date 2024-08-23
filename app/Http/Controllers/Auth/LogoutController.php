@@ -14,6 +14,6 @@ class LogoutController extends Controller
 
         Auth::logout();
 
-        return redirect(route('main.index'))->setStatusCode(302);
+        return redirect(route('home'))->setStatusCode(302);
     }
 }

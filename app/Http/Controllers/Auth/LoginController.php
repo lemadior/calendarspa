@@ -6,6 +6,8 @@ use App\Http\Requests\Auth\Calendar\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Post(
@@ -49,10 +51,10 @@ class LoginController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect(route('admin.faux.index'));
+            return redirect(route('calendar.index'));
         }
 
-        return view('auth.login');
+        return inertia('Auth/Login');
     }
 
     /**
@@ -65,7 +67,7 @@ class LoginController extends Controller
         $data = $request->validated();
 
         if (Auth::attempt($data)) {
-            return redirect()->intended(route('admin.faux.index'));
+            return redirect()->intended(route('admin.calendar.index'));
         }
 
         Log::error('[LOGIN] wrong login attempt for user with email: ' . $data['email']);

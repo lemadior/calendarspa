@@ -1,5 +1,5 @@
 import './bootstrap';
-// import '../css/app.css'; // Необходимо для подключения Tailwind
+import '../css/app.css'; // Необходимо для подключения Tailwind
 
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';

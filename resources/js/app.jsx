@@ -1,20 +1,20 @@
 import './bootstrap';
-import '../css/app.css'; // Необходимо для подключения Tailwind
+import '../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
 import { useRoute } from '../../vendor/tightenco/ziggy';
-//import Layout from '@/Layouts/Layout'; // На начальном этапе это нужно закомментировать, если не нужны Лейауты
+import Layout from '@/Layouts/Layout';
 
 const route = useRoute();
 
 createInertiaApp({
-    title: title => `LAREACT | ${title}`, // Это нужно для динимечского изменения титла через компонент Head. Если не нужно - можно отключить.
+    title: title => `LAREACT | ${title}`,
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true });
         const page = pages[ `./Pages/${name}.jsx` ];
 
-        // page.default.layout = page.default.layout || (page => <Layout children={ page } />); // Это тоже можно отключить, если не нужны Лейауты.
+        page.default.layout = page.default.layout || (page => <Layout children={ page } />);
 
         return page;
     },

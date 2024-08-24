@@ -30,6 +30,7 @@ function Login () {
                         placeholder="Your login / Email"
                         className="auth_input"
                     />
+                    { errors.email && <p className="validation_error">{ errors.email }</p> }
 
                     <input
                         type='password'
@@ -39,9 +40,9 @@ function Login () {
                         placeholder="Type pass here"
                         className="auth_input"
                     />
+                    { errors.password && <p className="validation_error">{ errors.password }</p> }
 
-                    <input type='submit' value='Log In'
-                        className="form_button" />
+                    <input type='submit' value='Log In' className="form_button" />
                 </form>
             </div>
         </div>

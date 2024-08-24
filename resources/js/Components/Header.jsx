@@ -24,33 +24,37 @@ function Header (props) {
     }
 
     return (
-        <header>
-            <div className="header_container">
-                <div className="header_logo">
-                    <Link href={ logoLink } className={ noLink }><img src="/storage/images/SmallLogo.png" alt="logo" /></Link>
+        <>
+            <header>
+                <div className="header_container">
+                    <div className="header_logo">
+                        <Link href={ logoLink } className={ noLink }><img src="/storage/images/SmallLogo.png" alt="logo" /></Link>
 
-                    <span className="py-2">Calendar Event-Venues Aggregator</span>
+                        <span className="py-2">Calendar Event-Venues Aggregator</span>
+                    </div>
+
+                    <nav className="header_menu">
+                        { (isRegister || isHome) && <Link href={ route('auth.login') } className="nav-link">Login</Link> }
+                        { (isLogin || isHome) && <Link href={ route('auth.register') } className="nav-link">Register</Link> }
+
+                        { user &&
+                            <>
+                                <Avatar />
+                                {/* <Link href={ route('auth.logout') } className="nav-link">Logout</Link> */ }
+                                <form onSubmit={ submit }>
+                                    <button className="nav-link outline-none">Logout</button>
+                                </form>
+                            </>
+                        }
+                    </nav>
+
+
                 </div>
+            </header>
 
-                <nav className="header_menu">
-                    { (isRegister || isHome) && <Link href={ route('auth.login') } className="nav-link">Login</Link> }
-                    { (isLogin || isHome) && <Link href={ route('auth.register') } className="nav-link">Register</Link> }
-
-                    { user &&
-                        <>
-                            <Avatar />
-                            {/* <Link href={ route('auth.logout') } className="nav-link">Logout</Link> */ }
-                            <form onSubmit={ submit }>
-                                <button className="nav-link outline-none">Logout</button>
-                            </form>
-                        </>
-                    }
-                </nav>
-
-                { successMsg && <div className='success'>{ successMsg }</div> }
-                { errorMsg && <div className='error'>{ errorMsg }</div> }
-            </div>
-        </header>
+            { successMsg && <div className='success'>{ successMsg }</div> }
+            { errorMsg && <div className='error'>{ errorMsg }</div> }
+        </>
     );
 }
 

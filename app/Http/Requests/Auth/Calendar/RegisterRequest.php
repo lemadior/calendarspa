@@ -43,7 +43,7 @@ class RegisterRequest extends FormRequest
                     ->symbols()
                     ->uncompromised()
             ],
-            'confirm' => ['required', 'string', new ConfirmRule($password)]
+            'password_confirmation' => ['required', 'string', new ConfirmRule($password)]
         ];
     }
 }

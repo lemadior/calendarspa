@@ -138,13 +138,26 @@
         @apply p-2 border rounded-md m-2;
     }
 
+    .message {
+        @apply p-2 shadow-lg text-sm text-white font-bold text-center font_raleway_light
+    }
+
     .success {
-        @apply absolute top-24 right-6 bg-green-500 p-2 rounded-md shadow-lg text-sm text-white;
+        @apply bg-green-500 message;
     }
 
     .error {
-        @apply absolute top-24 right-6 bg-red-500 p-2 rounded-md shadow-lg text-sm text-white;
+        @apply bg-red-500 message;
     }
+
+    .validation_error {
+        @apply text-red-600 pb-2 pl-4 text-xs text-left font_raleway_light font-semibold;
+    }
+}
+
+
+.font_raleway_light {
+    font-family: Raleway-Light;
 }
 
 .no_link {

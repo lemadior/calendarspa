@@ -28,6 +28,7 @@ class RegisterController extends Controller
      */
     public function registerPost(RegisterRequest $request)
     {
+
         $data = $request->validated();
 
         unset($data['confirm']);

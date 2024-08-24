@@ -33,6 +33,10 @@ function Layout ({ children }) {
 
     }, [ success, error ]);
 
+    setTimeout(() => {
+        setSuccessMsg(null);
+        setErrorMsg(null);
+    }, 2000);
     // console.log('page', usePage());
 
     const headerProps = {

@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Auth\Calendar;
+namespace App\Http\Requests\Calendar;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\Auth\Calendar\ConfirmRule;
+use Illuminate\Validation\Rules\Password;
 
-class LoginRequest extends FormRequest
+class CalendarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +25,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            'date' => 'sometimes|string'
         ];
     }
 }

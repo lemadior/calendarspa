@@ -34,8 +34,8 @@ function Header (props) {
                     </div>
 
                     <nav className="header_menu">
-                        { (isRegister || isHome) && <Link href={ route('auth.login') } className="nav-link">Login</Link> }
-                        { (isLogin || isHome) && <Link href={ route('auth.register') } className="nav-link">Register</Link> }
+                        { ((isRegister || isHome) && !user) && <Link href={ route('auth.login') } className="nav-link">Login</Link> }
+                        { ((isLogin || isHome) && !user) && <Link href={ route('auth.register') } className="nav-link">Register</Link> }
 
                         { user &&
                             <>

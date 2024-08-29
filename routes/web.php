@@ -22,8 +22,8 @@ Route::prefix('auth')->as('auth.')->namespace('App\Http\Controllers\Auth')->grou
 });
 
 // Admin dashboard. Need log in
-Route::prefix('admin')->as('admin.')->namespace('App\Http\Controllers\Calendar')->middleware('auth')->group(function () {
+Route::prefix('admin')->as('admin.')->namespace('App\Http\Controllers')->middleware('auth')->group(function () {
     Route::prefix('calendar')->as('calendar.')->namespace('Calendar')->group(function () {
-        Route::get('/calendar', [CalendarController::class, 'index'])->name('index');
+        Route::get('/', [CalendarController::class, 'index'])->name('index');
     });
 });

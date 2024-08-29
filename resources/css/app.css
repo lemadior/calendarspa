@@ -117,7 +117,6 @@
     }
 
 
-
     .title {
         @apply text-4xl font-bold text-center;
     }
@@ -152,6 +151,53 @@
 
     .validation_error {
         @apply text-red-600 pb-2 pl-4 text-xs text-left font_raleway_light font-semibold;
+    }
+
+    .calendar_selection_container {
+        @apply w-[900px] mx-auto flex flex-row gap-4 justify-between justify-center;
+    }
+
+    .month_select,
+    .year_select {
+        @apply p-2 m-2 border border-gray-300 rounded-md outline-none;
+    }
+
+    .calendar_month {
+        @apply w-[880px] mx-auto flex flex-col flex-nowrap;
+    }
+
+    .calendar_month_header {
+        @apply mb-3 flex flex-row flex-nowrap text-center justify-between gap-1 text-gray-500;
+    }
+
+
+
+    .calendar_week {
+        @apply flex flex-row flex-nowrap text-center justify-between gap-1;
+    }
+
+    .disabled .day {
+        @apply flex flex-row items-center justify-between;
+    }
+
+    .day_current {
+        @apply bg-indigo-300 text-white;
+    }
+
+    .day_enabled {
+        @apply calendar_enabled calendar_background;
+    }
+
+    .day_disabled {
+        @apply text-gray-400 disabled_link calendar_background;
+    }
+
+    .day_meeting {
+        @apply meeting place-self-start;
+    }
+
+    .day_event {
+        @apply event place-self-end ml-auto;
     }
 }
 
@@ -204,16 +250,46 @@ th {
     padding-block: 18px 16px;
     font-family: 'RobotoRegular';
     font-size: 70px;
-    background: lavender;
-    border: 4px solid white;
-    color: cadetblue;
+
+    border-radius: 5px;
+    /* color: cadetblue; */
+
     cursor: pointer;
     display: inline-block;
     width: 120px;
+    margin-block: 3px;
+}
+
+.calendar_background {
+    background: lavender;
+}
+
+.calendar_enabled {
+    color: #4f8183;
 }
 
 .calendar:hover {
-    color: darkcyan;
+    color: #016a6a;
+    background: rgb(165 180 252);
+}
+
+.calendar__month_header-common,
+.calendar__month_header-current {
+    padding-block: 0.75rem;
+    padding-inline: 2.5rem;
+    width: 120px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.calendar__month_header-common {
+    color: rgb(107 114 128);
+    background-color: rgb(165 180 252);
+}
+
+.calendar__month_header-current {
+    color: white;
+    background-color: rgb(99 102 241);
 }
 
 .hidden_event {
@@ -232,11 +308,12 @@ th {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: bold;
     z-index: 10;
     margin-block-start: -14px;
-    line-height: 9px;
+    line-height: 10px;
+    font-family: sans-serif;
 }
 
 

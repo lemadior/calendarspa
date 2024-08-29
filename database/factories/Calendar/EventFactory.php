@@ -27,7 +27,7 @@ class EventFactory extends Factory
             'title' => fake()->sentence(5, true),
             'start' => fake()->time('H:i'),
             'duration' => fake()->time('H:i'),
-            'type_id' => fake()->randomElement($types)['id'],
+            'type_id' => fake()->randomElement($types),
             'status_id' => fake()->randomElement($statuses)['id'],
             'description' => fake()->paragraph(2, true),
             'date' => fake()->dateTimeThisMonth()

@@ -45,6 +45,7 @@ function Layout ({ children }) {
         isHome: component === 'Home',
         isLogin: component === 'Auth/Login',
         isRegister: component === 'Auth/Register',
+        isDayEvents: component == 'Calendar/Day',
         user
     };
 

@@ -37,5 +37,30 @@ export const EVENT_STATUSES = [
     'Pended',
     'Finished',
     'Waiting',
-    'Pause'
+    'Paused'
 ];
+
+export const EVENT_DURATIONS = {
+    "0": 'Unlimited',
+    "0:30": "30 min",
+    "1:00": "1 hour",
+    "1:30": "1 hour 30 min",
+    "2:00": "2 hour",
+    "2:30": '2 hour 30 min',
+    "3:00": '3 hour or more'
+};
+
+
+function getSecondsFromTime (time) {
+    const [ hours, minutes ] = time.split(':').map(Number);
+
+    return (hours * 3600) + (minutes * 60);
+}
+
+// Compare incoming duration time with predefined ones
+export function getDuration (time) {
+    const timeInSeconds = getSecondsFromTime(time);
+
+    return Object.keys(EVENT_DURATIONS)
+        .find(dtime => timeInSeconds <= getSecondsFromTime(dtime)) ?? '0';
+}

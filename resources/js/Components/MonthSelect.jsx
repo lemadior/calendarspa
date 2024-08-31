@@ -14,7 +14,7 @@ function MonthSelect ({ month: monthNow, onMonthChange }) {
                 onChange={ (e) => onMonthChange(e.target.value) }
             >
                 { MONTHS.map((month, index) => {
-                    return <option value={ index } key={ index }>{ month }</option>;
+                    return <option value={ index } key={ index + month }>{ month }</option>;
                 }) }
             </select>
         </>

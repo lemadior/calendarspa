@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Calendar\EventService;
 use App\Services\Calendar\DateService;
 use App\Http\Requests\Calendar\CalendarRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -40,7 +41,7 @@ class CalendarController extends Controller
             $data['date'] = $this->dateService->scrubDate($data['date']);
         }
 
-        $incomingDate = $data['date'] ?? date('Y-m-d');
+        $incomingDate = $data['date'] ?? Carbon::now('Europe/Kyiv')->format('Y-m-d');;
 
         // return response()->json($incomingDate);
 
@@ -54,6 +55,8 @@ class CalendarController extends Controller
         //     dd($monthData);
         // }
 
-        return response()->json($monthData);
+        // dd($incomingDate, $monthData);
+
+        return response()->json(['monthData' => $monthData, 'incomingDate' => $incomingDate]);
     }
 }

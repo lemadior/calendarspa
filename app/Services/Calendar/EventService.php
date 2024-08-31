@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\Calendar\DateService;
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class EventService
 {
@@ -19,7 +20,7 @@ class EventService
 
     public function __construct()
     {
-        $this->user = auth()->user();
+        $this->user = auth()->user() ?? User::find(1); // TODO remove false condition after adding JWT token
         $this->dateService = app(DateService::class);
     }
 
@@ -70,7 +71,7 @@ class EventService
         foreach ($events as $event) {
             $eventDate = $this->dateService->getDate($event->date);
 
-            if ($eventDate->format('j') === $weekDay) {
+            if ($eventDate->format('j') == $weekDay) {
                 $weekEvents[] = $event;
             }
         }
@@ -82,9 +83,10 @@ class EventService
     protected function getEvents(DateTime $baseDate): Collection
     {
         // If user doesn't authenticated just return empty Collection
-        if (!$this->user) {
-            return new Collection();
-        }
+        // TODO add JWT token to the API part
+        // if (!$this->user) {
+        //     return new Collection();
+        // }
 
         $baseYear = $baseDate->format('Y');
         $baseMonth = $baseDate->format('m');
@@ -92,6 +94,8 @@ class EventService
         $events = User::find($this->user->id)?->events()
             ->whereYear('date', $baseYear)
             ->whereMonth('date', $baseMonth);
+
+        // dump($events->select('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get());
 
         return $events->select('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get();
     }
@@ -110,7 +114,7 @@ class EventService
         $baseDate = $this->dateService->getDate($weekDate);
 
         $baseMonth = $baseDate->format('m');
-
+        // dump($baseMonth);
         // Get events depends on month from $baseDate
         $events = $this->getEvents($baseDate);
 
@@ -119,14 +123,14 @@ class EventService
         $startWeek = $weekNumber - 1;
 
         $startDay->modify('+' . $startWeek . ' week');
-
+        // dd($startDay);
         for ($i = 0; $i <= 6; $i++) {
 
             // Skip first day of the first week. It used as is (without modify)
             $weekday = $i > 0 ? $startDay->modify('+1 day') : $startDay;
 
             // Check if the date belongs to the months from $baseDate
-            $isBaseMonth = $weekday->format('m') === $baseMonth;
+            $isBaseMonth = $weekday->format('m') == $baseMonth;
 
             // Store week's day as array with assigned to it events (if ones exists)
             // 'valid' is indicate
@@ -138,6 +142,8 @@ class EventService
             ];
         }
 
+
+        // Log::info('Week:' . $week);
         return $week;
     }
 }

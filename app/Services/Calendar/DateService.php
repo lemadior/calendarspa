@@ -2,6 +2,7 @@
 
 namespace App\Services\Calendar;
 
+use Carbon\Carbon;
 use DateTime;
 
 class DateService
@@ -12,10 +13,12 @@ class DateService
      */
     function scrubDate($date): string
     {
-        $arr = explode("T", $date);
-        $arr[1] = substr($arr[1], 0, strripos($arr[1], '.'));
+        $scrubDate = Carbon::parse($date)->setTimezone(config('app.timezone'));
+        return $scrubDate->format('Y-m-d H:i:s');
+        // $arr = explode("T", $date);
+        // $arr[1] = substr($arr[1], 0, strripos($arr[1], '.'));
 
-        return implode(' ', $arr);
+        // return implode(' ', $arr);
     }
 
     function getDate(string $date): DateTime

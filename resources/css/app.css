@@ -170,8 +170,6 @@
         @apply mb-3 flex flex-row flex-nowrap text-center justify-between gap-1 text-gray-500;
     }
 
-
-
     .calendar_week {
         @apply flex flex-row flex-nowrap text-center justify-between gap-1;
     }
@@ -199,6 +197,94 @@
     .day_event {
         @apply event place-self-end ml-auto;
     }
+
+    .day_events_container {
+        @apply flex-grow container mx-auto p-4 max_width mb-0;
+    }
+
+    .day_events_header {
+        @apply mx-auto max-w-fit;
+    }
+
+    .day_events_header_title {
+        @apply text-4xl font-bold text-center mt-4 mb-8;
+    }
+
+    .day_events_header_dayname {
+        @apply text-right pb-5 relative bottom-9 text-slate-500;
+    }
+
+    .day_events_table_container {
+        @apply mx-auto w-[1000px];
+    }
+
+    .day_events_table_header {
+        @apply mt-4 mb-2 flex flex-row justify-between flex-nowrap gap-2 justify-items-center;
+    }
+
+    .day_events_table_header_id {
+        @apply py-3 bg-slate-300 font-bold text-center w-[45px];
+    }
+
+    .day_events_table_header_title {
+        @apply py-3 bg-slate-300 font-bold text-center w-1/3;
+    }
+
+    .day_events_table_header_time,
+    .day_events_table_header_actions,
+    .day_events_table_header_duration {
+        @apply py-3 bg-slate-300 font-bold text-center w-[100px];
+    }
+
+    .day_events_table_header_type {
+        @apply py-3 bg-slate-300 font-bold text-center w-[150px];
+    }
+
+    .day_events_table_header_description {
+        @apply py-3 bg-slate-300 font-bold text-center w-1/3;
+    }
+
+    .day_events_table_header_status {
+        @apply py-3 bg-slate-300 font-bold text-center w-[120px];
+    }
+
+    .day_events_edit_form {
+        @apply w-[50%] mx-auto flex flex-col justify-between;
+    }
+
+    .day_events_edit_form_title {
+        @apply border rounded-md py-1 px-4 mb-6 mt-2;
+    }
+
+    .day_events_edit_form_time {
+        @apply border rounded-md py-1 px-4 mb-6 mt-2;
+    }
+
+    .day_events_edit_form_duration {
+        @apply border rounded-md py-2 px-4 mb-6 mt-2 w-40;
+    }
+
+    .day_events_edit_form_type,
+    .day_events_edit_form_status {
+        @apply border rounded-md py-2 px-4 mb-6 mt-2 w-40;
+    }
+
+    .day_events_edit_form_description {
+        @apply border rounded-md p-2;
+    }
+
+    .day_events_edit_form_submit {
+        @apply btn bg-blue-700 hover:bg-blue-400 text-white mx-6 mt-6;
+    }
+
+    .day_events_edit_form_cancel {
+        @apply btn bg-gray-900 hover:bg-gray-600 text-white mx-6 mt-6;
+    }
+
+    .day_events_edit_form_delete {
+        @apply btn bg-red-600 hover:bg-red-400 text-white mx-6 mt-6;
+    }
+
 }
 
 
@@ -290,6 +376,7 @@ th {
 .calendar__month_header-current {
     color: white;
     background-color: rgb(99 102 241);
+    font-family: 'RobotoRegular';
 }
 
 .hidden_event {
@@ -337,19 +424,61 @@ th {
 }
 
 .event_data {
-    font-size: 16px;
-    line-height: 40px;
+    font-size: 14px;
+    line-height: 20px;
     font-family: 'RobotoLight';
 }
 
-.event_data td {
-    padding-inline: 24px;
+
+.event_data a:nth-child(odd) {
+    background: rgb(252, 252, 255);
 }
 
-.event_data td a:hover {
-    color: blue;
+.event_data a:hover {
+    /* color: white; */
+    background-color: rgb(237 239 251);
+    /* font-weight: 700; */
 }
 
-.event_data:nth-child(even) {
-    background: ghostwhite;
+.day_events_table_row {
+    margin-block-end: -22px;
+}
+
+.day_events_table_row_delete {
+    position: absolute;
+    top: 296px;
+    right: 176px;
+    margin-block-end: -20px;
+    background: red;
+    padding-inline: 4px;
+    padding-block: 0;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    font-family: 'RobotoRegular';
+    font-size: 9px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+.day_events_add_new {
+    padding: 5px 10px;
+    background: #6ec96e;
+    color: white;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+    border-radius: 6px;
+}
+
+.day_events_add_new:hover {
+    background: #16b916;
+}
+
+.day_has_no_events {
+    margin: 0 auto;
+    padding: 50px;
+    text-align: center;
+    font-weight: 700;
+    font-family: 'RobotoLight';
 }

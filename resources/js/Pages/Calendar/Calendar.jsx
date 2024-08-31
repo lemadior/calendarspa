@@ -3,33 +3,41 @@ import Month from '../../Components/Month';
 import MonthSelect from '../../Components/MonthSelect';
 import YearSelect from '../../Components/YearSelect';
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/react';
 
-function Calendar ({ monthData }) {
+function Calendar ({ monthData, incomingDate }) {
 
     const currentDate = new Date();
-
-    const [ month, setMonth ] = useState(currentDate.getMonth());
-    const [ year, setYear ] = useState(currentDate.getFullYear());
+    console.log('CD=', incomingDate);
+    const [ iDate, setIDate ] = useState(incomingDate);
+    const workDate = new Date(iDate);
+    const [ month, setMonth ] = useState(workDate.getMonth());
+    const [ year, setYear ] = useState(workDate.getFullYear());
     const [ mData, setMData ] = useState(monthData);
 
-    const workDate = new Date();
-    workDate.setFullYear(year);
-    workDate.setMonth(month);
-    workDate.setDate(currentDate.getDate());
-    console.log('Wdate: ' + workDate.toLocaleDateString());
+
+
+    // workDate.setFullYear(year);
+    // workDate.setMonth(month);
+    // workDate.setDate(currentDate.getDate());
+    // console.log('Wdate: ' + workDate.toLocaleDateString());
     // const year = const year = date.getFullYear();
     // const month = currentDate.getMonth() + 1;
     // const workDate = currentDate;
     const isCurrent = currentDate.getMonth() === workDate.getMonth() && currentDate.getFullYear() === workDate.getFullYear();
+    // console.log('C-isCurrent', isCurrent, currentDate.getDate(), workDate.getDate());
     const data = {
         // events,
         // types,
         monthData: mData,
-        workDate: isCurrent ? workDate : null
+        workDate,
+        isCurrent
     };
 
     const handleMonthChange = (newMonth) => {
+        console.log('newMonth', newMonth);
         setMonth(newMonth);
+
         fetchEvents(newMonth, year);
     };
 
@@ -38,22 +46,20 @@ function Calendar ({ monthData }) {
         fetchEvents(month, newYear);
     };
 
-    const fetchEvents = async (selectedMonth, selectedYear) => {
+    const fetchEvents = async (newMonth, newYear) => {
+        console.log('newMonth:newYear', newMonth, newYear);
         const newDate = new Date();
-        newDate.setFullYear(selectedYear);
-        newDate.setMonth(selectedMonth);
-
-        if ((new Date).getMonth() != selectedMonth) {
+        newDate.setFullYear(newYear);
+        newDate.setMonth(newMonth);
+        console.log('month:year', month, year);
+        if ((new Date).getMonth() != newMonth) {
             // Here is setting date to 1st day of the month because if the month is not current one
             // The day date is not important
             newDate.setDate(1);
         }
-        // const dates = '2024-02-08T12:24:17.987Z';
-        // const data = {
-        //     date: newDate
-        //     // Здесь можно добавить другие данные, если нужно
-        // };
-        //        // console.log('new adte: ' + encodeURIComponent(dates));
+
+        console.log(newDate.toLocaleString());
+
         try {
             const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}`, {
                 method: 'GET',
@@ -65,8 +71,9 @@ function Calendar ({ monthData }) {
             if (response.ok) {
                 const result = await response.json();
                 console.log('Success:', result);
-                setMData(result);
-                // Здесь можно обновить состояние или перерисовать компонент на основе полученных данных
+
+                setMData(result.monthData);
+                setIDate(result.incomingDate);
             } else {
                 console.error('Error:', response.statusText);
             }
@@ -78,7 +85,7 @@ function Calendar ({ monthData }) {
     return (
         <>
             <h1 className="title mb-4">Events dashboard</h1>
-            <span>{ month } { year }</span>
+            <Link href={ route('admin.calendar.showday', { date: '2024-07-07', events: [ 1, 2, 3 ] }) }>Day Data</Link>
             <div className="calendar_selection_container">
                 <MonthSelect month={ month } onMonthChange={ handleMonthChange } />
                 <YearSelect year={ year } onYearChange={ handleYearChange } />

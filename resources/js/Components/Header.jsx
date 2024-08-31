@@ -10,6 +10,7 @@ function Header (props) {
             errorMsg,
             isLogin,
             isRegister,
+            isDayEvents,
             user
         }
     } = props;
@@ -39,8 +40,12 @@ function Header (props) {
 
                         { user &&
                             <>
+                                { isDayEvents &&
+                                    <Link href={ route('admin.calendar.index') } className="hover:bg-gray-400 hover:text-white rounded-md">
+                                        <img src="/storage/images/event.png" alt="calendar" className="h-11" />
+                                    </Link>
+                                }
                                 <Avatar />
-                                {/* <Link href={ route('auth.logout') } className="nav-link">Logout</Link> */ }
                                 <form onSubmit={ submit }>
                                     <button className="nav-link outline-none">Logout</button>
                                 </form>

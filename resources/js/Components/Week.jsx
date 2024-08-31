@@ -10,15 +10,6 @@ function Week (props) {
         workDate
     } = props;
 
-    // const dayData = {
-    //     isEnabled: true,
-    //     date: 28,
-    //     events: 0,
-    //     meetings: 0
-    // };
-
-    // console.log(workDate?.getMonth(), workDate?.getFullYear());
-
     const today = new Date();
 
     return (
@@ -26,32 +17,32 @@ function Week (props) {
             {
                 weekData.map((day, index) => {
                     const isToday = day.today && today.getMonth() == workDate?.getMonth() && today.getFullYear() == workDate?.getFullYear();
-                    const events = [];
-                    const meetings = [];
+                    const eventsCount = {
+                        events: 0,
+                        meetings: 0
+                    };
 
                     if (day.events.length) {
                         day.events.forEach((event) => {
-                            {/* if (!event.length) {
-                                return;
-                            } */}
-
                             if (event.type_id === 2 || event.type_id === 3) {
-                                meetings.push(event);
+                                eventsCount.meetings++;
                             } else {
-                                events.push(event);
+                                eventsCount.events++;
                             }
+
                         });
+
                     }
 
                     const dayData = {
                         isEnabled: day.valid,
                         date: day.date,
+                        workDate,
                         isCurrent: isToday,
-                        events,
-                        meetings
+                        eventsCount
                     };
 
-                    return < Day key={ index } dayData={ dayData } />;
+                    return <Day key={ index } dayData={ dayData } />;
                 })
             }
         </div>

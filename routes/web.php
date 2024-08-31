@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Calendar\CalendarController;
+use App\Http\Controllers\Calendar\DayController;
+use App\Http\Controllers\Calendar\EventController;
 use Illuminate\Support\Facades\Route;
 
 use Inertia\Inertia;
@@ -25,5 +27,14 @@ Route::prefix('auth')->as('auth.')->namespace('App\Http\Controllers\Auth')->grou
 Route::prefix('admin')->as('admin.')->namespace('App\Http\Controllers')->middleware('auth')->group(function () {
     Route::prefix('calendar')->as('calendar.')->namespace('Calendar')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('index');
+        Route::get('/day', [CalendarController::class, 'showDay'])->name('showday');
+    });
+
+    Route::prefix('events')->as('event.')->namespace('Calendar')->group(function () {
+        Route::get('/create', [EventController::class, 'create'])->name('create');
+        Route::get('/{event}', [EventController::class, 'edit'])->name('edit');
+        Route::post('/create', [EventController::class, 'store'])->name('store');
+        Route::patch('/{event}/edit', [EventController::class, 'update'])->name('update');
+        Route::delete('/{event}', [EventController::class, 'delete'])->name('delete');
     });
 });

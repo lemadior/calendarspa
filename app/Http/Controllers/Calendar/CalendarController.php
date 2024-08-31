@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Calendar;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Calendar\DayRequest;
 use App\Services\Calendar\EventService;
 use App\Services\Calendar\DateService;
 use App\Http\Requests\Calendar\CalendarRequest;
+use App\Models\Calendar\Event;
 use DateTime;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -44,7 +46,8 @@ class CalendarController extends Controller
         }
 
         $incomingDate = $data['date'] ?? date('Y-m-d');
-
+        // $incomingDate = $data['date'] ?? date('2024-07-23');
+        // dd($incomingDate);
         $monthData = [];
 
         for ($i = 1; $i <= 6; $i++) {
@@ -57,6 +60,20 @@ class CalendarController extends Controller
 
         return Inertia::render('Calendar/Calendar', [
             'monthData' => $monthData,
+            'incomingDate' => $incomingDate
         ]);
+    }
+
+    public function showDay(DayRequest $request)
+    {
+        // dd($request);
+        $data = $request->validated();
+        $date = $this->dateService->getDate($data['date']);
+        $data['day'] = $date->format('l');
+        // $data['events'] = !empty($data['events']) ? Event::whereIn('id', $data['events'])->get() : [];
+        $data['events'] = Event::whereDate('date', $data['date'])->get();
+        // dd($data);
+
+        return Inertia::render("Calendar/Day", ['data' => $data]);
     }
 }

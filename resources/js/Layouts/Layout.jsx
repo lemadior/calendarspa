@@ -37,7 +37,6 @@ function Layout ({ children }) {
         setSuccessMsg(null);
         setErrorMsg(null);
     }, 2000);
-    // console.log('page', usePage());
 
     const headerProps = {
         successMsg,

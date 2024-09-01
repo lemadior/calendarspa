@@ -2,7 +2,6 @@ import BigLogo from '../../Components/BigLogo';
 import { useForm } from '@inertiajs/react';
 
 function Login () {
-    // console.log(useForm());
     const { data, setData, post, errors, processing } = useForm({
         email: '',
         password: ''

@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Calendar;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\Auth\Calendar\ConfirmRule;
-use Illuminate\Validation\Rules\Password;
 
 class CalendarRequest extends FormRequest
 {

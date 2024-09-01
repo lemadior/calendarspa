@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Services\Calendar\DateService;
 use DateTime;
 use Exception;
-use Illuminate\Support\Facades\Log;
+
 
 class EventService
 {
@@ -58,8 +58,6 @@ class EventService
         $events = User::find($this->user->id)?->events()
             ->whereYear('date', $baseYear)
             ->whereMonth('date', $baseMonth);
-
-        // dump($events->select('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get());
 
         return $events->select('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get();
     }
@@ -115,6 +113,22 @@ class EventService
         return Event::whereDate('date', $date)->get();
     }
 
+    // Add new Event
+    public function createEvent(array $data): Event
+    {
+        try {
+            $event = Event::create($data);
+            $event->save();
+
+            $this->user->events()->attach($event->id);
+        } catch (Exception $err) {
+            throw new Exception($err->getMessage());
+        }
+
+        return $event;
+    }
+
+    // Edit the Event
     public function updateEvent(Event $event, array $eventData): Event
     {
         try {
@@ -127,6 +141,7 @@ class EventService
         return $event;
     }
 
+    // Delete the Event
     public function deleteEvent(Event $event): int
     {
         $eventId = $event->id;

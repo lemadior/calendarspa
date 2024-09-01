@@ -11,10 +11,9 @@ function Event ({ action, data: incomingData }) {
         event,
         id,
         date,
-        dayDate
+        dayDate,
+        isExpired
     } = incomingData;
-
-    console.log(event);
 
     const { data, setData, post, patch, errors, processing } = useForm({
         title: action === 'edit' ? event?.title : '',
@@ -47,7 +46,6 @@ function Event ({ action, data: incomingData }) {
                     type='text'
                     id='title'
                     name='title'
-                    // defaultValue=''
                     value={ data.title }
                     onChange={ e => setData('title', e.target.value) }
                     className='day_events_edit_form_title'
@@ -59,7 +57,6 @@ function Event ({ action, data: incomingData }) {
                     type='time'
                     id='start'
                     name='start'
-                    // defaultValue=''
                     value={ data.start }
                     onChange={ e => setData('start', e.target.value) }
                     className='day_events_edit_form_time'
@@ -73,7 +70,6 @@ function Event ({ action, data: incomingData }) {
                     className='day_events_edit_form_duration'
                     value={ data.duration }
                     onChange={ e => setData('duration', e.target.value) }
-                // defaultValue='1'
                 >
                     { Object.entries(EVENT_DURATIONS).map((entry, index) => {
                         return <option value={ entry[ 0 ] } key={ index }>{ entry[ 1 ] }</option>;
@@ -87,7 +83,6 @@ function Event ({ action, data: incomingData }) {
                     className='day_events_edit_form_type'
                     value={ data.type_id }
                     onChange={ e => setData('type_id', e.target.value) }
-                // defaultValue='1'
                 >
                     { EVENT_TYPES.map((type, index) => {
                         return <option value={ index + 1 } key={ index } >{ type }</option>;
@@ -101,7 +96,6 @@ function Event ({ action, data: incomingData }) {
                     className='day_events_edit_form_status'
                     value={ data.status_id }
                     onChange={ e => setData('status_id', e.target.value) }
-                // defaultValue='1'
                 >
                     { EVENT_STATUSES.map((status, index) => {
                         return <option value={ index + 1 } key={ index } >{ status }</option>;
@@ -119,12 +113,13 @@ function Event ({ action, data: incomingData }) {
                     className="day_events_edit_form_description"
                 ></textarea>
 
-                <input type='submit' value={ submitTitle } className="day_events_edit_form_submit" />
+                { !isExpired &&
+                    <input type='submit' value={ submitTitle } className='day_events_edit_form_submit' />
+                }
 
                 <Link as="button" type="button" onClick={ () => window.history.back() } className="day_events_edit_form_cancel">
                     Cancel
                 </Link>
-
 
                 { action === 'edit' &&
                     <Link
@@ -141,11 +136,9 @@ function Event ({ action, data: incomingData }) {
                         Delete Event
                     </Link>
                 }
-
             </form>
-
         </>
     );
 }
 
-export default Event;
+export default Event;;

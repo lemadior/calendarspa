@@ -12,8 +12,6 @@ use Inertia\Inertia;
 
 class CalendarController extends Controller
 {
-    // protected const DAYS_IN_WEEK = 7;
-
     protected EventService $eventService;
     protected DateService $dateService;
 
@@ -25,17 +23,7 @@ class CalendarController extends Controller
 
     public function index(Request $request)
     {
-        // if ($request->query('date')) {
-        //     dd($request->query('date'));
-        // }
-
-        // $data = $request->validated();
-        // dump($request);
         $data['date'] = $request->query('date');
-
-        // if ($data['date']) {
-        //     dd($data['date']);
-        // }
 
         if ($data && !empty($data['date']) && strpos($data['date'], 'T')) {
             $data['date'] = $this->dateService->scrubDate($data['date']);
@@ -43,19 +31,11 @@ class CalendarController extends Controller
 
         $incomingDate = $data['date'] ?? Carbon::now('Europe/Kyiv')->format('Y-m-d');;
 
-        // return response()->json($incomingDate);
-
         $monthData = [];
 
         for ($i = 1; $i <= 6; $i++) {
             $monthData[] = $this->eventService->getDaysWithEventsByWeek($incomingDate, $i);
         }
-
-        // if ($data) {
-        //     dd($monthData);
-        // }
-
-        // dd($incomingDate, $monthData);
 
         return response()->json(['monthData' => $monthData, 'incomingDate' => $incomingDate]);
     }

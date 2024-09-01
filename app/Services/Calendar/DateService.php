@@ -41,7 +41,6 @@ class DateService
         return $this->getDate($firstDayDate);
     }
 
-
     /**
      * Generally the calendar will display six weeks. The first one always contain the first day in the month.
      * But first week can starts from date of previous month.
@@ -56,6 +55,7 @@ class DateService
         return $initialDay->modify('-' . $initialDayPosition . ' day');
     }
 
+    // Get name of the day (ex. Monday etc.)
     public function getFullNameOfDay(string $date): string
     {
         $date = $this->getDate($date);
@@ -63,6 +63,7 @@ class DateService
         return $date->format('l');
     }
 
+    // Get date store in the Event model. Return only year-month-day part.
     public function getEventDate(Event $event): string
     {
         return explode(' ', $event->date)[0];

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Calendar;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Calendar\EventDeleteRequest;
 use App\Http\Requests\Calendar\EventEditRequest;
 use App\Http\Requests\Calendar\EventsNewOrChangeRequest;
 use App\Models\Calendar\Event;
-use App\Models\User;
 use App\Services\Calendar\DateService;
 use App\Services\Calendar\EventService;
 use Exception;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -31,7 +28,10 @@ class EventController extends Controller
     public function edit(Event $event, EventEditRequest $request)
     {
         $data = $request->validated();
+
         $data['event'] = $event;
+
+        $data['isExpired'] = (bool)$data['isExpired'];
 
         return Inertia::render('Calendar/Event', ['action' => 'edit', 'data' => $data]);
     }
@@ -68,16 +68,15 @@ class EventController extends Controller
         $eventDate = $data['date'];
 
         $data['date'] = $this->dateService->getDate($eventDate);
+
         try {
-            $event = Event::create($data);
-            $event->save();
-            $user = auth()->user() ?? User::find(1);
-            $user->events()->attach($event->id);
+            $this->eventService->createEvent($data);
         } catch (Exception $err) {
-            return redirect()->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])->with('error', $err->getMessage());
+            return redirect()
+                ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+                ->with('error', $err->getMessage());
         }
-        // dd($data);
-        //  route('admin.calendar.showday', { date: dayDate, events: eventIds }) }
+
         return redirect()
             ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
             ->with('success', "The Event was created successfully");

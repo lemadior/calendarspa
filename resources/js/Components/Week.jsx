@@ -2,14 +2,10 @@ import Day from './Day';
 import { EVENT_TYPES } from '../Utils/Utils';
 
 function Week (props) {
-
-    // console.log(props);
-
     const {
         weekData,
         workDate
     } = props;
-
     const today = new Date();
 
     return (
@@ -29,9 +25,7 @@ function Week (props) {
                             } else {
                                 eventsCount.events++;
                             }
-
                         });
-
                     }
 
                     const dayData = {

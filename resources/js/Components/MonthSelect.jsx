@@ -2,8 +2,6 @@
 import { MONTHS } from '../Utils/Utils';
 
 function MonthSelect ({ month: monthNow, onMonthChange }) {
-    // const monthNow = (new Date()).getMonth();
-
     return (
         <>
             <select

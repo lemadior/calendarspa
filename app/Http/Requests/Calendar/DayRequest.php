@@ -23,8 +23,6 @@ class DayRequest extends FormRequest
     {
         return [
             'date' => 'required|string|date_format:Y-m-d',
-            // 'events' => 'nullable|array',
-            // 'events.*' => 'integer|exists:events,id'
         ];
     }
 }

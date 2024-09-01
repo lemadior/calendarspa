@@ -25,7 +25,8 @@ class EventEditRequest extends FormRequest
             'id' => 'required|integer|min:1',
             'event' => 'integer|exists:events,id',
             'dayDate' => 'required|string|date_format:Y.m.d',
-            'date' => 'nullable|string|date_format:Y-m-d'
+            'date' => 'nullable|string|date_format:Y-m-d',
+            'isExpired' => 'required|boolean'
         ];
     }
 }

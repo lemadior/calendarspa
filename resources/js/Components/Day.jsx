@@ -11,16 +11,13 @@ function Day ({ dayData }) {
         },
         isCurrent,
     } = dayData;
-    // console.log(dayData);
+
     const validDay = isEnabled ? 'day_enabled' : 'day_disabled';
     const currentDate = isCurrent ? 'day_current' : validDay;
-
     const month = ('00' + (workDate.getMonth() + 1)).slice(-2);
     const day = ('00' + date).slice(-2);
     const dayDate = `${workDate.getFullYear()}-${month}-${day}`;
 
-
-    // console.log('dayEvents', dayEvents);
     return (
         <Link
             href={ route('admin.calendar.showday', { date: dayDate }) }
@@ -35,4 +32,4 @@ function Day ({ dayData }) {
     );
 }
 
-export default Day;;;;;
+export default Day;

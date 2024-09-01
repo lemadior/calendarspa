@@ -2,6 +2,7 @@
 
 namespace App\Services\Calendar;
 
+use App\Models\Calendar\Event;
 use Carbon\Carbon;
 use DateTime;
 
@@ -14,11 +15,8 @@ class DateService
     function scrubDate($date): string
     {
         $scrubDate = Carbon::parse($date)->setTimezone(config('app.timezone'));
-        return $scrubDate->format('Y-m-d H:i:s');
-        // $arr = explode("T", $date);
-        // $arr[1] = substr($arr[1], 0, strripos($arr[1], '.'));
 
-        // return implode(' ', $arr);
+        return $scrubDate->format('Y-m-d H:i:s');
     }
 
     function getDate(string $date): DateTime
@@ -56,5 +54,17 @@ class DateService
         $initialDayPosition = $initialDay->format('w');
 
         return $initialDay->modify('-' . $initialDayPosition . ' day');
+    }
+
+    public function getFullNameOfDay(string $date): string
+    {
+        $date = $this->getDate($date);
+
+        return $date->format('l');
+    }
+
+    public function getEventDate(Event $event): string
+    {
+        return explode(' ', $event->date)[0];
     }
 }

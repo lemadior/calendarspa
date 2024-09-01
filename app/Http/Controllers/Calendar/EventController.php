@@ -9,17 +9,22 @@ use App\Http\Requests\Calendar\EventsNewOrChangeRequest;
 use App\Models\Calendar\Event;
 use App\Models\User;
 use App\Services\Calendar\DateService;
+use App\Services\Calendar\EventService;
 use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class EventController extends Controller
 {
+    const SHOW_DAY_ROUTE = 'admin.calendar.showday';
+
     protected DateService $dateService;
+    protected EventService $eventService;
 
     public function __construct()
     {
         $this->dateService = app(DateService::class);
+        $this->eventService = app(EventService::class);
     }
 
 
@@ -27,41 +32,41 @@ class EventController extends Controller
     {
         $data = $request->validated();
         $data['event'] = $event;
-        // dd($data);
+
         return Inertia::render('Calendar/Event', ['action' => 'edit', 'data' => $data]);
     }
 
     public function create(EventEditRequest $request)
     {
         $data = $request->validated();
-        // $data['event'] = $event;
-        // dd($data);
+
         return Inertia::render('Calendar/Event', ['action' => 'create', 'data' => $data]);
     }
 
     public function update(Event $event, EventsNewOrChangeRequest $request)
     {
         $data = $request->validated();
-        $eventId = $event->id;
-        $eventDate = explode(' ', $event->date)[0];
-        // $data['event'] = $event;
-        // dd($data);
+
+        $eventDate = $this->dateService->getEventDate($event);
+
         try {
-            $event->update($data);
-            $event->refresh();
+            $this->eventService->updateEvent($event, $data);
         } catch (Exception $err) {
-            return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('error', $err->getMessage());
+            return redirect()
+                ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+                ->with('error', $err->getMessage());
         }
-        //  route('admin.calendar.showday', { date: dayDate, events: eventIds }) }
-        return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('success', "Event was update successfully");
+
+        return redirect()
+            ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+            ->with('success', "Event was update successfully");
     }
 
     public function store(EventsNewOrChangeRequest $request)
     {
         $data = $request->validated();
         $eventDate = $data['date'];
-        // $eventDate = '2024-01-09';
-        // $data['event'] = $event;
+
         $data['date'] = $this->dateService->getDate($eventDate);
         try {
             $event = Event::create($data);
@@ -69,24 +74,29 @@ class EventController extends Controller
             $user = auth()->user() ?? User::find(1);
             $user->events()->attach($event->id);
         } catch (Exception $err) {
-            return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('error', $err->getMessage());
+            return redirect()->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])->with('error', $err->getMessage());
         }
         // dd($data);
         //  route('admin.calendar.showday', { date: dayDate, events: eventIds }) }
-        return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('success', "The Event was created successfully");
+        return redirect()
+            ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+            ->with('success', "The Event was created successfully");
     }
 
     public function delete(Event $event)
     {
-        // $data = $request->validated();
-        $eventDate = explode(' ', $event->date)[0];
-        // dd($event, $eventDate);
+        $eventDate = $this->dateService->getEventDate($event);
+
         try {
-            $event->delete();
+            $this->eventService->deleteEvent($event);
         } catch (Exception $err) {
-            return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('error', $err->getMessage());
+            return redirect()
+                ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+                ->with('error', $err->getMessage());
         }
-        //  route('admin.calendar.showday', { date: dayDate, events: eventIds }) }
-        return redirect()->route('admin.calendar.showday', ['date' => $eventDate])->with('success', "Event was deleted successfully");
+
+        return redirect()
+            ->route(self::SHOW_DAY_ROUTE, ['date' => $eventDate])
+            ->with('success', "Event was deleted successfully");
     }
 }

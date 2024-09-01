@@ -68,10 +68,11 @@ class CalendarController extends Controller
     {
         // dd($request);
         $data = $request->validated();
-        $date = $this->dateService->getDate($data['date']);
-        $data['day'] = $date->format('l');
+        // $date = $this->dateService->getDate($data['date']);
+        $data['day'] = $this->dateService->getFullNameOfDay($data['date']);
         // $data['events'] = !empty($data['events']) ? Event::whereIn('id', $data['events'])->get() : [];
-        $data['events'] = Event::whereDate('date', $data['date'])->get();
+        // $data['events'] = Event::whereDate('date', $data['date'])->get();
+        $data['events'] = $this->eventService->getEventsByDate($data['date']);
         // dd($data);
 
         return Inertia::render("Calendar/Day", ['data' => $data]);

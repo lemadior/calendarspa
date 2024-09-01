@@ -2,6 +2,7 @@
 
 namespace App\Services\Calendar;
 
+use App\Models\Calendar\Event;
 use \Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -23,43 +24,6 @@ class EventService
         $this->user = auth()->user() ?? User::find(1); // TODO remove false condition after adding JWT token
         $this->dateService = app(DateService::class);
     }
-
-    // function getDate(string $date): DateTime
-    // {
-    //     // If date coming in 'YYYY-mm-dd' format. Without time.
-    //     if (strlen($date) <= 10) {
-    //         $date .= ' 00:00:00';
-    //     }
-
-    //     return (new DateTime())::createFromFormat('Y-m-d H:i:s', $date);
-    // }
-
-
-    // // Get first day of the month relative based on incoming date
-    // public function getFirstDayOfTheMonth(DateTime $date): DateTime
-    // {
-    //     $year = $date->format('Y');
-    //     $month = $date->format('m');
-
-    //     $firstDayDate = $year . '-' . $month . '-01 00:00:00';
-
-    //     return $this->getDate($firstDayDate);
-    // }
-
-
-    // /*
-    // * Generally the calendar will display six weeks. The first one always contain the first day in the month.
-    // * But first week can starts from date of previous month.
-    // * Get the first date for the first displayed week
-    // */
-    // public function getFirstDayOfFirstWeek(DateTime $baseDate): DateTime
-    // {
-    //     $initialDay = $this->getFirstDayOfTheMonth($baseDate);
-
-    //     $initialDayPosition = $initialDay->format('w');
-
-    //     return $initialDay->modify('-' . $initialDayPosition . ' day');
-    // }
 
     // Get only events belongs to specified date ($weekdays)
     public function getEventsForWeekDay($events, DateTime $weekday): array
@@ -114,7 +78,7 @@ class EventService
         $baseDate = $this->dateService->getDate($weekDate);
 
         $baseMonth = $baseDate->format('m');
-        // dump($baseMonth);
+
         // Get events depends on month from $baseDate
         $events = $this->getEvents($baseDate);
 
@@ -123,7 +87,7 @@ class EventService
         $startWeek = $weekNumber - 1;
 
         $startDay->modify('+' . $startWeek . ' week');
-        // dd($startDay);
+
         for ($i = 0; $i <= 6; $i++) {
 
             // Skip first day of the first week. It used as is (without modify)
@@ -133,7 +97,7 @@ class EventService
             $isBaseMonth = $weekday->format('m') == $baseMonth;
 
             // Store week's day as array with assigned to it events (if ones exists)
-            // 'valid' is indicate
+            // 'valid' is indicate that date is belongs to the current Month
             $week[] = [
                 'date' => $weekday->format('j'),
                 'events' => $isBaseMonth ? $this->getEventsForWeekDay($events, $weekday) : [],
@@ -142,8 +106,37 @@ class EventService
             ];
         }
 
-
-        // Log::info('Week:' . $week);
         return $week;
+    }
+
+    // The $date must be in format 'YYYY-mm-dd'
+    public function getEventsByDate(string $date)
+    {
+        return Event::whereDate('date', $date)->get();
+    }
+
+    public function updateEvent(Event $event, array $eventData): Event
+    {
+        try {
+            $event->update($eventData);
+            $event->refresh();
+        } catch (Exception $err) {
+            throw new Exception($err->getMessage());
+        }
+
+        return $event;
+    }
+
+    public function deleteEvent(Event $event): int
+    {
+        $eventId = $event->id;
+
+        try {
+            $event->delete();
+        } catch (Exception $err) {
+            throw new Exception($err->getMessage());
+        }
+
+        return $eventId;
     }
 }

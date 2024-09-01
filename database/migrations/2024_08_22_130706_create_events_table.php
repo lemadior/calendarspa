@@ -31,7 +31,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->dateTime('date');
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ class RegisterController extends Controller
     public function register()
     {
         if (Auth::check()) {
-            return redirect(route('calendar.index'));
+            return redirect(route('admin.calendar.index'));
         }
 
         return inertia('Auth/Register');

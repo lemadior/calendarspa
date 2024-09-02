@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import Month from '../../Components/Month';
 import MonthSelect from '../../Components/MonthSelect';
 import YearSelect from '../../Components/YearSelect';
 
 function Calendar ({ monthData, incomingDate }) {
+    const {
+        props: {
+            auth: {
+                jwt_token: token
+            }
+        },
+    } = usePage();
 
     const currentDate = new Date();
     const [ iDate, setIDate ] = useState(incomingDate);
@@ -46,10 +53,14 @@ function Calendar ({ monthData, incomingDate }) {
         console.log(newDate.toLocaleString());
 
         try {
+            // console.log('JWT Token:', token);
+
             const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
@@ -79,6 +90,6 @@ function Calendar ({ monthData, incomingDate }) {
             <Month data={ data } />
         </>
     );
-}
+};
 
 export default Calendar;

@@ -21,7 +21,7 @@ class EventService
 
     public function __construct()
     {
-        $this->user = auth()->user() ?? User::find(1); // TODO remove false condition after adding JWT token
+        $this->user = auth()->user() ?? false; // TODO remove false condition after adding JWT token
         $this->dateService = app(DateService::class);
     }
 
@@ -48,9 +48,11 @@ class EventService
     {
         // If user doesn't authenticated just return empty Collection
         // TODO add JWT token to the API part
-        // if (!$this->user) {
-        //     return new Collection();
-        // }
+        // dd($this->user);
+        if (!$this->user) {
+            return new Collection();
+        }
+
 
         $baseYear = $baseDate->format('Y');
         $baseMonth = $baseDate->format('m');

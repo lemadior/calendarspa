@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { usePage } from '@inertiajs/react';
+// import { usePage } from '@inertiajs/react';
 import Month from '../../Components/Month';
 import MonthSelect from '../../Components/MonthSelect';
 import YearSelect from '../../Components/YearSelect';
 
 function Calendar ({ monthData, incomingDate }) {
-    const {
-        props: {
-            auth: {
-                jwt_token: token
-            }
-        },
-    } = usePage();
+    // const {
+    //     component,
+    //     props: {
+    //         auth: {
+    //             jwt_token: token
+    //         }
+    //     },
+    // } = usePage();
+
+    // console.log('Auth:', token);
 
     const currentDate = new Date();
     const [ iDate, setIDate ] = useState(incomingDate);
@@ -52,8 +55,26 @@ function Calendar ({ monthData, incomingDate }) {
 
         console.log(newDate.toLocaleString());
 
+        // const fetchTokenAndData = async () => {
+
         try {
-            // console.log('JWT Token:', token);
+            // Get the API JWT token
+            const tokenResponse = await fetch('/auth/get-user-token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                credentials: 'include'
+            });
+
+            if (!tokenResponse.ok) {
+                throw new Error('Failed to fetch token');
+            }
+
+            const { token } = await tokenResponse.json();
+
+            console.log('JWT Token:', token);
 
             const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}`, {
                 method: 'GET',

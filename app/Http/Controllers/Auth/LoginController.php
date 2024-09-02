@@ -6,9 +6,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+// use Inertia\Inertia;
+// use Illuminate\Http\Request;
 
 /**
  * @OA\Post(
@@ -68,10 +67,7 @@ class LoginController extends Controller
         $data = $request->validated();
 
         if (Auth::attempt($data)) {
-            $user = auth()->user();
-            $token = JWTAuth::fromUser($user);
-
-            return redirect()->route('admin.calendar.index')->with('jwt_token', $token);
+            return redirect()->intended()->route('admin.calendar.index')->with;
         }
 
         Log::error('[LOGIN] wrong login attempt for user with email: ' . $data['email']);

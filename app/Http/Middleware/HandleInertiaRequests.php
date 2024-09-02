@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => fn() => $request->user() ? $request->user()->only('id', 'name') : null,
-                'jwt_token' => $request->session()->get('jwt_token')
+                // 'jwt_token' => $request->session()->get('jwt_token')
             ],
             'flash' => [
                 'success' => fn() => $request->session()->get('success'),

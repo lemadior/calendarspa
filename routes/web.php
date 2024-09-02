@@ -3,8 +3,9 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Calendar\CalendarController;
-use App\Http\Controllers\Calendar\DayController;
+// use App\Http\Controllers\Calendar\DayController;
 use App\Http\Controllers\Calendar\EventController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::prefix('auth')->as('auth.')->namespace('App\Http\Controllers\Auth')->grou
     Route::get('/register', [RegisterController::class, 'register'])->name('register');
     Route::post('/register', [RegisterController::class, 'registerPost'])->name('register.post');
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::post('/get-user-token', [AuthController::class, 'getUserToken']);
 });
 
 // Admin dashboard. Need log in

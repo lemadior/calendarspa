@@ -58,7 +58,7 @@ Test User credentials:
 
 **IMPORTANT:** Don't forget delete or change guest user's credentials after testing.
 
-1.  Create new key for JWT token:
+10.  Create new key for JWT token:
 
 ```docker exec -it app php artisan jwt:secret```
 

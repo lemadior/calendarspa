@@ -21,6 +21,8 @@ function Header (props) {
     function submit (e) {
         e.preventDefault();
 
+        sessionStorage.clear();
+
         post(route('auth.logout'));
     }
 
@@ -45,6 +47,7 @@ function Header (props) {
                                         <img src="/storage/images/event.png" alt="calendar" className="h-11" />
                                     </Link>
                                 }
+                                <span className='pt-1'>{ user.name }</span>
                                 <Avatar />
                                 <form onSubmit={ submit }>
                                     <button className="nav-link outline-none">Logout</button>

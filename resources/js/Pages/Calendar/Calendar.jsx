@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Month from '../../Components/Month';
 import MonthSelect from '../../Components/MonthSelect';
 import YearSelect from '../../Components/YearSelect';
@@ -12,12 +12,18 @@ function Calendar ({ monthData, incomingDate }) {
     const [ mData, setMData ] = useState(monthData);
     const isCurrent = currentDate.getMonth() === workDate.getMonth() && currentDate.getFullYear() === workDate.getFullYear();
 
-
     const data = {
         monthData: mData,
         workDate,
         isCurrent
     };
+
+    useEffect(() => {
+        if (!sessionStorage.getItem('pageReloaded')) {
+            sessionStorage.setItem('pageReloaded', 'true');
+            window.location.reload(true);
+        }
+    }, []);
 
     const handleMonthChange = (newMonth) => {
         console.log('newMonth', newMonth);

@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\V1\Calendar\CalendarController;
 use App\Http\Controllers\Api\V1\Calendar\DataController;
 use App\Http\Controllers\Api\V1\Calendar\EventController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -13,13 +12,7 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-
     Route::post('login', [AuthController::class, 'login']);
-
-    // Route::post('logout', 'AuthController@logout');
-    // Route::post('refresh', 'AuthController@refresh');
-    // Route::post('me', 'AuthController@me');
-
 });
 
 Route::prefix('admin')->as('api.')->middleware('jwt.auth')->namespace('App\Http\Controllers\Api\V1')->group(function () {

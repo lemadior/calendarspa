@@ -19,6 +19,8 @@ cd to the ./store
         DB_PASSWORD=<user_password>
         DB_ROOT_PASSWORD=<root_password>
 
+**IMPORTANT:** Also need to change ```APP_TIMEZONE``` parameter to correctly display current date!
+
 4. Change access rights for the current folder:
 
 ```sudo chown -R 1000:33 $(pwd)```
@@ -47,12 +49,24 @@ Update the node modules:
 
 ```docker exec -it app php artisan migrate --seed```
 
-**NOTE**: the seeder will create a few test users but for testing the 'guest 
+**NOTE**: the seeder will create a few test users but for testing the guest
 user will be used.
 
-10. Before start type the command:
+Test User credentials:
+
+        email: test@example.com
+        pass: password
+
+**IMPORTANT:** Don't forget delete or change guest user's credentials after testing.
+
+10. Create new key for JWT token:
+
+```docker exec -it app php artisan jwt:secret```
+
+11. Before start type the command:
 
 ```npm run dev```
 
 Then the URL http://localhost:5000 must be available to testing
 
+12. API documentation available at URL http://localhost:5000/api/documentation

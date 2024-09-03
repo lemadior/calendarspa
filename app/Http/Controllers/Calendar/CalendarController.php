@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Calendar;
 
-use App\Http\Controllers\Controller;
+
+use App\Http\Requests\Calendar\CalendarRequest;
 use App\Http\Requests\Calendar\DayRequest;
 use App\Services\Calendar\EventService;
 use App\Services\Calendar\DateService;
-use App\Http\Requests\Calendar\CalendarRequest;
-// use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-
 
 class CalendarController extends Controller
 {
     protected EventService $eventService;
+
     protected DateService $dateService;
 
     public function __construct()
@@ -22,11 +22,16 @@ class CalendarController extends Controller
         $this->dateService = app(DateService::class);
     }
 
+    /**
+     * Get data for the Month based on specified date
+     *
+     * @param \App\Http\Requests\Calendar\CalendarRequest $request
+     *
+     * @return \Inertia\Response
+     */
     public function index(CalendarRequest $request)
     {
         $data = $request->validated();
-
-        // $data['date'] = $request->query('date');
 
         if ($data && !empty($data['date']) && strpos($data['date'], 'T')) {
             $data['date'] = $this->dateService->scrubDate($data['date']);
@@ -46,6 +51,13 @@ class CalendarController extends Controller
         ]);
     }
 
+    /**
+     * Events Summary of the Day
+     *
+     * @param \App\Http\Requests\Calendar\DayRequest $request
+     *
+     * @return \Inertia\Response
+     */
     public function showDay(DayRequest $request)
     {
         $data = $request->validated();

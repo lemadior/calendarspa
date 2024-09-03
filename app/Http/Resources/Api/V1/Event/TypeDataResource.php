@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Exception;
 
-
 class TypeDataResource extends DataResource
 {
     /**

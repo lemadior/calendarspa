@@ -33,7 +33,7 @@ class EventShowResource extends DataResource
 
             return  $this->prepareError('Get event by ID', $err->getMessage());
         }
-        // dd($eventData->toArray());
+
         return ['event' => $eventData[0]];
     }
 }

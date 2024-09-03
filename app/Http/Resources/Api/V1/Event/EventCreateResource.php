@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Api\V1\Event;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Http\Resources\Api\V1\DataResource;
-use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
+use Illuminate\Http\Request;
+use Exception;
 
 class EventCreateResource extends DataResource
 {

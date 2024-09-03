@@ -9,7 +9,7 @@ function Month ({ data }) {
     } = data;
 
     const dayOfWorkDate = workDate.getDay();
-    console.log('m IsCurrent', isCurrent);
+
     return (
         <div className='calendar_month'>
             <div className="calendar_month_header">

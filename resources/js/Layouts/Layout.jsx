@@ -48,7 +48,6 @@ function Layout ({ children }) {
         user
     };
 
-    console.log(component, headerProps);
     return (
         <div className="body_block">
             <Header headerProps={ headerProps } />

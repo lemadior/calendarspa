@@ -56,6 +56,7 @@ class CalendarResource extends DataResource
         return $date ?? Carbon::now(config('app.timezone'))->format('Y-m-d');
     }
 
+    // Remove some of the Event attributes (not needed for API)
     protected function scrubMonthData(array $monthData, bool $isFetch = false): array
     {
         $_monthData = $monthData;

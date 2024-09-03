@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Calendar\Event;
-use App\Models\Calendar\Type;
 use App\Models\Calendar\Status;
 use Illuminate\Database\Seeder;
+use App\Models\Calendar\Event;
+use App\Models\Calendar\Type;
 use App\Models\User;
 
 class DatabaseSeeder extends Seeder

@@ -62,9 +62,6 @@ function Calendar ({ monthData, incomingDate }) {
 
             const { token } = await tokenResponse.json();
 
-            // console.log(newDate.toISOString());
-            // console.log('JWT Token:', token);
-
             const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}&fetch=1`, {
                 method: 'GET',
                 headers: {
@@ -76,7 +73,7 @@ function Calendar ({ monthData, incomingDate }) {
 
             if (response.ok) {
                 const { data } = await response.json();
-                console.log('Success:', data);
+                // console.log('Success:', data);
 
                 setMData(data.month_data);
                 setIDate(data.base_date);

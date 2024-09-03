@@ -2,15 +2,14 @@
 
 namespace App\Services\Calendar;
 
-use App\Models\Calendar\Event;
+
 use \Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
-
-use App\Models\User;
 use App\Services\Calendar\DateService;
+use App\Models\Calendar\Event;
+use App\Models\User;
 use DateTime;
 use Exception;
-
 
 class EventService
 {
@@ -21,7 +20,7 @@ class EventService
 
     public function __construct()
     {
-        $this->user = auth()->user() ?? false; // TODO remove false condition after adding JWT token
+        $this->user = auth()->user() ?? false;
         $this->dateService = app(DateService::class);
     }
 

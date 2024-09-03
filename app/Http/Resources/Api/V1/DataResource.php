@@ -39,6 +39,7 @@ class DataResource extends JsonResource
         ];
     }
 
+    // Add to the response status code
     public function withResponse(Request $request, JsonResponse $response)
     {
         $response->header('Content-Type', 'application/json');

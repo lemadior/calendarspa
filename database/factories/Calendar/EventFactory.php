@@ -2,9 +2,9 @@
 
 namespace Database\Factories\Calendar;
 
-use App\Models\Calendar\Type;
-use App\Models\Calendar\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Calendar\Status;
+use App\Models\Calendar\Type;
 use Carbon\Carbon;
 
 /**
@@ -22,8 +22,6 @@ class EventFactory extends Factory
         $types = Type::all(['id'])->toArray();
         $statuses = Status::all(['id'])->toArray();
 
-        // $startTime = fake()->time('H:i');
-
         return [
             'title' => fake()->sentence(5, true),
             'start' => fake()->time('H:i'),
@@ -34,8 +32,6 @@ class EventFactory extends Factory
             'date' => fake()->dateTimeThisMonth()
         ];
     }
-
-
 
 
     public function getDuration()

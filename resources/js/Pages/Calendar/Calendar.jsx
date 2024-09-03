@@ -86,11 +86,11 @@ function Calendar ({ monthData, incomingDate }) {
             });
 
             if (response.ok) {
-                const result = await response.json();
+                const { data } = await response.json();
                 // console.log('Success:', result);
 
-                setMData(result.monthData);
-                setIDate(result.incomingDate);
+                setMData(data.monthData);
+                setIDate(data.date);
             } else {
                 console.error('Error:', response.statusText);
             }

@@ -67,7 +67,7 @@ class LoginController extends Controller
         $data = $request->validated();
 
         if (Auth::attempt($data)) {
-            return redirect()->intended()->route('admin.calendar.index')->with;
+            return redirect()->intended(route('admin.calendar.index'));
         }
 
         Log::error('[LOGIN] wrong login attempt for user with email: ' . $data['email']);

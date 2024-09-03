@@ -5,15 +5,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Calendar\CalendarController;
-// use App\Http\Controllers\Calendar\DayController;
 use App\Http\Controllers\Calendar\EventController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');;
+Route::get('/', HomeController::class)->name('home');;
 
 // Authentication pages
 Route::prefix('auth')->as('auth.')->namespace('App\Http\Controllers\Auth')->group(function () {

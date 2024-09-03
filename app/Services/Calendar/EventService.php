@@ -113,7 +113,8 @@ class EventService
             ->whereDate('date', $date)
             ->selectRaw('event_id as id')
             ->addSelect('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')
-            ->get();
+            ->get()
+            ->makeHidden('pivot');
     }
 
     // The $date must be in format 'YYYY-mm-dd'

@@ -11,6 +11,7 @@ use App\Services\Calendar\EventService;
 use Exception;
 use Inertia\Inertia;
 
+
 class EventController extends Controller
 {
     const SHOW_DAY_ROUTE = 'admin.calendar.showday';
@@ -23,7 +24,6 @@ class EventController extends Controller
         $this->dateService = app(DateService::class);
         $this->eventService = app(EventService::class);
     }
-
 
     public function edit(Event $event, EventEditRequest $request)
     {

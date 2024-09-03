@@ -56,8 +56,8 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json(
                 [
                     'error' => [
-                        'action' => 'event request',
-                        'message' => 'Event not found'
+                        'action' => 'resource request',
+                        'message' => 'resource not found'
                     ]
                 ],
                 404

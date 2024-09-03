@@ -5,24 +5,51 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+/**
+ * @OA\Post(
+ *     path="/auth/login",
+ *     operationId="authUser",
+ *     summary="Get token to works with API for admin tasks",
+ *     description="Get token for existent user",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(
+ *             allOf={
+ *                 @OA\Schema(
+ *                     @OA\Property(property="email", type="string", example="test@example.com"),
+ *                     @OA\Property(property="password", type="string", example="password"),
+ *                )
+ *             }
+ *          )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="OK",
+ *         @OA\JsonContent(description="Current token",
+ *             @OA\Property(property="token", type="string", example="<token>", description="Admin Authentication Token"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="400",
+ *         description="Bad Request",
+ *         @OA\JsonContent(
+ *                 @OA\Property(property="error", type="string", example="Wrong request!")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="404",
+ *         description="Resource not found"
+ *     )
+ * )
+ */
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     // $this->middleware('auth:api', ['except' => ['login']]);
-    // }
-
     public function getUserToken(Request $request)
     {
         $user = auth()->user();
 
         if (!$user) {
-            return response()->json(['token' => ''], 401); // Если не авторизован
+            return response()->json(['token' => ''], 401);
         }
 
         // JWT-token generation

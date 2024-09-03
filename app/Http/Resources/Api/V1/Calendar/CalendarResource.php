@@ -20,6 +20,7 @@ class CalendarResource extends DataResource
     {
         $monthData = [];
         $dateValue = $request->query('date') ?? null;
+        $isFetchFromComponent = $request->query('fetch') ?? false;
 
         try {
             $incomingDate = $this->checkDate($dateValue);
@@ -31,7 +32,7 @@ class CalendarResource extends DataResource
             $date = $this->dateService->getDate($incomingDate);
 
             $result = [
-                'month_data' => $this->scrubMonthData($monthData),
+                'month_data' => $this->scrubMonthData($monthData, $isFetchFromComponent),
                 'base_date' => $incomingDate,
                 'month' => $date->format('F'),
                 'year' => $date->format('Y')
@@ -55,12 +56,19 @@ class CalendarResource extends DataResource
         return $date ?? Carbon::now(config('app.timezone'))->format('Y-m-d');
     }
 
-    protected function scrubMonthData(array $monthData): array
+    protected function scrubMonthData(array $monthData, bool $isFetch = false): array
     {
         $_monthData = $monthData;
 
         foreach ($_monthData as $wkey => $week) {
+
             foreach ($week as $dkey => $day) {
+
+                if (!$isFetch) {
+                    unset($monthData[$wkey][$dkey]['valid']);
+                    unset($monthData[$wkey][$dkey]['today']);
+                }
+
                 foreach ($day['events'] as $ekey => $event) {
                     $_event = $event->toArray();
                     $_event = array_merge(['id' => $_event['event_id']], $_event);

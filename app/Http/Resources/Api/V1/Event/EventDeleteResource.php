@@ -37,8 +37,8 @@ class EventDeleteResource extends DataResource
 
         return [
             'status' => 'success',
-            'date' => $eventDate,
-            'event_id' => $eventId
+            'event_id' => $eventId,
+            'date' => $eventDate
         ];
     }
 }

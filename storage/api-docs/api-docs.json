@@ -1,0 +1,1626 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Calendar Api",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000/api"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/admin/calendar?date=": {
+            "get": {
+                "tags": [
+                    "Calendar"
+                ],
+                "summary": "Get calendar data",
+                "description": "Get all events for specified month",
+                "operationId": "calendar",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Calendar data",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "date=2024-09-30": {
+                                "summary": "Data of all months' events",
+                                "value": "2024-09-30"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "month_data": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "description": "ID of the Event",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "title": {
+                                                                    "description": "Title of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Title of the Event"
+                                                                },
+                                                                "start": {
+                                                                    "description": "Time when Event have to start",
+                                                                    "type": "string",
+                                                                    "example": "10:30"
+                                                                },
+                                                                "duration": {
+                                                                    "description": "Duration of the Event (hrs)",
+                                                                    "type": "string",
+                                                                    "example": "1:30"
+                                                                },
+                                                                "type_id": {
+                                                                    "description": "ID of the Event's type",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "status_id": {
+                                                                    "description": "ID of the Event's status",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "description": {
+                                                                    "description": "Short Description of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Event description"
+                                                                },
+                                                                "date": {
+                                                                    "description": "The date to which the event is linked",
+                                                                    "type": "string",
+                                                                    "example": "2024-09-04 18:16:00"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "base_date": {
+                                                        "description": "Date of the month",
+                                                        "type": "string",
+                                                        "example": "2024-08-31 02:10:11"
+                                                    },
+                                                    "month": {
+                                                        "description": "Month for displaying events",
+                                                        "type": "string",
+                                                        "example": "August"
+                                                    },
+                                                    "year": {
+                                                        "description": "Year for displaying events",
+                                                        "type": "string",
+                                                        "example": "2024"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get calendar data"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/calendar/day?date=": {
+            "get": {
+                "tags": [
+                    "Calendar"
+                ],
+                "summary": "Get events of the day",
+                "description": "Get all events for specified day",
+                "operationId": "day_events",
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "Day data",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "date=2024-09-04": {
+                                "summary": "Data of all months' events",
+                                "value": "2024-09-04"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "date": {
+                                                        "description": "Date of the day",
+                                                        "type": "string",
+                                                        "example": "2024-09-04 02:10:11"
+                                                    },
+                                                    "day": {
+                                                        "description": "Day full name",
+                                                        "type": "string",
+                                                        "example": "Wednesday"
+                                                    },
+                                                    "month_data": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "description": "ID of the Event",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "title": {
+                                                                    "description": "Title of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Title of the Event"
+                                                                },
+                                                                "start": {
+                                                                    "description": "Time when Event have to start",
+                                                                    "type": "string",
+                                                                    "example": "10:30"
+                                                                },
+                                                                "duration": {
+                                                                    "description": "Duration of the Event (hrs)",
+                                                                    "type": "string",
+                                                                    "example": "1:30"
+                                                                },
+                                                                "type_id": {
+                                                                    "description": "ID of the Event's type",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "status_id": {
+                                                                    "description": "ID of the Event's status",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "description": {
+                                                                    "description": "Short Description of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Event description"
+                                                                },
+                                                                "date": {
+                                                                    "description": "The date to which the event is linked",
+                                                                    "type": "string",
+                                                                    "example": "2024-09-04 18:16:00"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get event by day data"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/event/type?id=0": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Get types List",
+                "description": "Get all or single event type",
+                "operationId": "types",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Type ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "id=0": {
+                                "summary": "Data of all event types",
+                                "value": "0"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Type ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of The Event Type",
+                                                        "type": "string",
+                                                        "example": "General"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get event type data"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/event/status?id=0": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Get statuses List",
+                "description": "Get all or single event status",
+                "operationId": "statuses",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Status ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "id=0": {
+                                "summary": "Data of all event statuses",
+                                "value": "0"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Status ID",
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "description": "Name of The Event Status",
+                                                        "type": "string",
+                                                        "example": "Finished"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get event status data"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/event/{event}": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Get event data",
+                "description": "Get all data for specified event",
+                "operationId": "event",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "4": {
+                                "summary": "ID of specified event",
+                                "value": "4"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "event": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "description": "ID of the Event",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "title": {
+                                                                    "description": "Title of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Title of the Event"
+                                                                },
+                                                                "start": {
+                                                                    "description": "Time when Event have to start",
+                                                                    "type": "string",
+                                                                    "example": "10:30"
+                                                                },
+                                                                "duration": {
+                                                                    "description": "Duration of the Event (hrs)",
+                                                                    "type": "string",
+                                                                    "example": "1:30"
+                                                                },
+                                                                "type_id": {
+                                                                    "description": "ID of the Event's type",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "status_id": {
+                                                                    "description": "ID of the Event's status",
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "description": {
+                                                                    "description": "Short Description of the Event",
+                                                                    "type": "string",
+                                                                    "example": "Event description"
+                                                                },
+                                                                "date": {
+                                                                    "description": "The date to which the event is linked",
+                                                                    "type": "string",
+                                                                    "example": "2024-09-04 18:16:00"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get event by ID"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Delete event",
+                "description": "Delete all data for specified event",
+                "operationId": "event_delete",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "1": {
+                                "summary": "ID of specified event",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "status": {
+                                                        "description": "Result of the creation",
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "event_id": {
+                                                        "description": "ID of newly created Event",
+                                                        "type": "integer",
+                                                        "example": 20
+                                                    },
+                                                    "date": {
+                                                        "description": "Date of the creation",
+                                                        "type": "string",
+                                                        "example": "2024-09-30"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Get event by ID"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/event": {
+            "post": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Create new event",
+                "description": "Create new event",
+                "operationId": "event_create",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "title": {
+                                                "type": "string",
+                                                "example": "New Event"
+                                            },
+                                            "start": {
+                                                "type": "string",
+                                                "example": "14:15"
+                                            },
+                                            "duration": {
+                                                "type": "string",
+                                                "example": "00:30"
+                                            },
+                                            "type_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "status_id": {
+                                                "type": "integer",
+                                                "example": 2
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Event created by API"
+                                            },
+                                            "date": {
+                                                "type": "string",
+                                                "example": "2024-09-30"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "status": {
+                                                        "description": "Result of the creation",
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "event_id": {
+                                                        "description": "ID of newly created Event",
+                                                        "type": "integer",
+                                                        "example": 20
+                                                    },
+                                                    "date": {
+                                                        "description": "Date of the creation",
+                                                        "type": "string",
+                                                        "example": "2024-09-30"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Create new event"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/admin/event/{event}/edit": {
+            "patch": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Edit event",
+                "description": "Edit existent event",
+                "operationId": "event_update",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "1": {
+                                "summary": "ID of specified event",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "title": {
+                                                "type": "string",
+                                                "example": "New Event"
+                                            },
+                                            "start": {
+                                                "type": "string",
+                                                "example": "14:15"
+                                            },
+                                            "duration": {
+                                                "type": "string",
+                                                "example": "00:30"
+                                            },
+                                            "type_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "status_id": {
+                                                "type": "integer",
+                                                "example": 2
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Event created by API"
+                                            },
+                                            "date": {
+                                                "type": "string",
+                                                "example": "2024-09-30"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Data array",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "status": {
+                                                        "description": "Result of the creation",
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "event_id": {
+                                                        "description": "ID of newly created Event",
+                                                        "type": "integer",
+                                                        "example": 20
+                                                    },
+                                                    "date": {
+                                                        "description": "Date of the creation",
+                                                        "type": "string",
+                                                        "example": "2024-09-30"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Unauthorized"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "resourse request"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "resource not found"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "properties": {
+                                                "action": {
+                                                    "description": "name of the action where error is occurred",
+                                                    "type": "string",
+                                                    "example": "Update event by ID"
+                                                },
+                                                "message": {
+                                                    "description": "Error message if incoming parameters is wrong",
+                                                    "type": "string",
+                                                    "example": "Fail due to some errors"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get token to works with API for admin tasks",
+                "description": "Get token for existent user",
+                "operationId": "authUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "test@example.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "password"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Current token",
+                                    "properties": {
+                                        "token": {
+                                            "description": "Admin Authentication Token",
+                                            "type": "string",
+                                            "example": "<token>"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Wrong request!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Calendar",
+            "description": "Calendar"
+        },
+        {
+            "name": "Event",
+            "description": "Event"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}

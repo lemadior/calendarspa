@@ -12,7 +12,7 @@ function Footer () {
                     <nav>
                         <ul className="flex space-x-8">
                             <li><Link href={ route('admin.calendar.index') } className="hover:text-black">Calendar</Link></li>
-                            <li><Link href="#" className="hover:text-black">Api documentation</Link></li>
+                            <li><Link href="/api/documentation" className="hover:text-black">Api documentation</Link></li>
                         </ul>
                     </nav>
                 </div>

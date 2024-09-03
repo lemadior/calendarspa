@@ -1,21 +1,9 @@
 import { useState } from 'react';
-// import { usePage } from '@inertiajs/react';
 import Month from '../../Components/Month';
 import MonthSelect from '../../Components/MonthSelect';
 import YearSelect from '../../Components/YearSelect';
 
 function Calendar ({ monthData, incomingDate }) {
-    // const {
-    //     component,
-    //     props: {
-    //         auth: {
-    //             jwt_token: token
-    //         }
-    //     },
-    // } = usePage();
-
-    // console.log('Auth:', token);
-
     const currentDate = new Date();
     const [ iDate, setIDate ] = useState(incomingDate);
     const workDate = new Date(iDate);
@@ -23,6 +11,8 @@ function Calendar ({ monthData, incomingDate }) {
     const [ year, setYear ] = useState(workDate.getFullYear());
     const [ mData, setMData ] = useState(monthData);
     const isCurrent = currentDate.getMonth() === workDate.getMonth() && currentDate.getFullYear() === workDate.getFullYear();
+
+
     const data = {
         monthData: mData,
         workDate,
@@ -55,8 +45,6 @@ function Calendar ({ monthData, incomingDate }) {
 
         console.log(newDate.toLocaleString());
 
-        // const fetchTokenAndData = async () => {
-
         try {
             // Get the API JWT token
             const tokenResponse = await fetch('/auth/get-user-token', {
@@ -77,7 +65,7 @@ function Calendar ({ monthData, incomingDate }) {
             // console.log(newDate.toISOString());
             // console.log('JWT Token:', token);
 
-            const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}`, {
+            const response = await fetch(`/api/admin/calendar?date=${encodeURIComponent(newDate.toISOString())}&fetch=1`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -88,10 +76,10 @@ function Calendar ({ monthData, incomingDate }) {
 
             if (response.ok) {
                 const { data } = await response.json();
-                // console.log('Success:', data);
+                console.log('Success:', data);
 
                 setMData(data.month_data);
-                setIDate(data.date);
+                setIDate(data.base_date);
             } else {
                 console.error('Error:', response.statusText);
             }

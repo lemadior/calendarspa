@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Calendar;
 
-use App\Http\Resources\Api\V1\Calendar\DataResource;
+use App\Http\Resources\Api\V1\DataResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;

@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        // api: __DIR__ . '/../routes/api.php',
-        // web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         using: function () {
             Route::middleware('api')
@@ -31,7 +30,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $err, Request $request) {
-            dd('EXCEPTION2');
             if ($request->is('api/*')) {
                 return response()->json(
                     [
@@ -44,16 +42,25 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
         $exceptions->render(function (UnauthorizedHttpException $err, Request $request) {
-            if ($err instanceof UnauthorizedHttpException) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'action' => 'resourse request',
-                            'message' => 'Unauthorized'
-                        ]
-                    ],
-                    401
-                );
-            }
+            return response()->json(
+                [
+                    'error' => [
+                        'action' => 'resourse request',
+                        'message' => 'Unauthorized'
+                    ]
+                ],
+                401
+            );
+        });
+        $exceptions->render(function (NotFoundHttpException $err, Request $request) {
+            return response()->json(
+                [
+                    'error' => [
+                        'action' => 'event request',
+                        'message' => 'Event not found'
+                    ]
+                ],
+                404
+            );
         });
     })->create();

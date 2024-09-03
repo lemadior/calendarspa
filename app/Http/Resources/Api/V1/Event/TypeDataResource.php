@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Resources\Api\V1\Calendar;
+namespace App\Http\Resources\Api\V1\Event;
 
-use App\Http\Resources\Api\V1\Calendar\DataResource;
+use App\Http\Resources\Api\V1\DataResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Exception;
 
-class StatusDataResource extends DataResource
+
+class TypeDataResource extends DataResource
 {
     /**
      * Transform the resource into an array.
@@ -16,24 +17,23 @@ class StatusDataResource extends DataResource
      */
     public function toArray(Request $request): array
     {
-        $statusId = $request->query('id');
+        $typeId = $request->query('id');
 
         $codeType = Response::HTTP_UNPROCESSABLE_ENTITY;
 
         try {
-            $data = $this->dataService->getStatuses($statusId);
-
+            $data = $this->dataService->getTypes($typeId);
             $result = $data->toArray();
 
             if (!count($result)) {
                 $codeType = Response::HTTP_NOT_FOUND;
 
-                $result =  $this->prepareError('Get event status data', 'Status not found');
+                $result =  $this->prepareError('Get event type data', 'Event type not found');
 
-                throw new Exception('Event status not found');
+                throw new Exception('Event type not found');
             }
         } catch (Exception $err) {
-            $result =  $this->prepareError('Get event status data', $err->getMessage());
+            $result =  $this->prepareError('Get event type data', $err->getMessage());
 
             $this->errorStatusCode = $codeType;
         }

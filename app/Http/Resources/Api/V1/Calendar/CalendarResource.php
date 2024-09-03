@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources\Api\V1\Calendar;
 
-use App\Http\Resources\Api\V1\Calendar\DataResource;
-use App\Services\Calendar\DateService;
-use App\Services\Calendar\EventService;
+use App\Http\Resources\Api\V1\DataResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Carbon\Carbon;

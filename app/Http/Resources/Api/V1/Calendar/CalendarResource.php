@@ -13,18 +13,6 @@ use Exception;
 
 class CalendarResource extends DataResource
 {
-    protected DateService $dateService;
-
-    protected EventService $eventService;
-
-    public function __construct($resource)
-    {
-        parent::__construct($resource);
-
-        $this->eventService = app(EventService::class);
-        $this->dateService = app(DateService::class);
-    }
-
     /**
      * Transform the resource into an array.
      *
@@ -77,8 +65,10 @@ class CalendarResource extends DataResource
             foreach ($week as $dkey => $day) {
                 foreach ($day['events'] as $ekey => $event) {
                     $_event = $event->toArray();
+                    $_event = array_merge(['id' => $_event['event_id']], $_event);
 
                     unset($_event['pivot']);
+                    unset($_event['event_id']);
 
                     $monthData[$wkey][$dkey]['events'][$ekey] = $_event;
                 }

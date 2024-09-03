@@ -109,7 +109,9 @@ class EventService
     // The $date must be in format 'YYYY-mm-dd'
     public function getEventsByDate(string $date)
     {
-        return Event::whereDate('date', $date)->get();
+        return Event::whereDate('date', $date)
+            ->select('id', 'title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')
+            ->get();
     }
 
     // Add new Event

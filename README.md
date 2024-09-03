@@ -49,8 +49,7 @@ Update the node modules:
 
 ```docker exec -it app php artisan migrate --seed```
 
-**NOTE**: the seeder will create a few test users but for testing the guest
-user will be used.
+**NOTE**: the seeder will create only test user for testing purpose.
 
 Test User credentials:
 
@@ -59,7 +58,7 @@ Test User credentials:
 
 **IMPORTANT:** Don't forget delete or change guest user's credentials after testing.
 
-10. Create new key for JWT token:
+1.  Create new key for JWT token:
 
 ```docker exec -it app php artisan jwt:secret```
 

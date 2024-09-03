@@ -47,12 +47,9 @@ class EventService
     protected function getEvents(DateTime $baseDate): Collection
     {
         // If user doesn't authenticated just return empty Collection
-        // TODO add JWT token to the API part
-        // dd($this->user);
         if (!$this->user) {
             return new Collection();
         }
-
 
         $baseYear = $baseDate->format('Y');
         $baseMonth = $baseDate->format('m');
@@ -61,7 +58,7 @@ class EventService
             ->whereYear('date', $baseYear)
             ->whereMonth('date', $baseMonth);
 
-        return $events->select('title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get();
+        return $events->select('event_id', 'title', 'start', 'duration', 'type_id', 'status_id', 'description', 'date')->get();
     }
 
     // $weekNumber allowed from 1 to 6!

@@ -45,7 +45,7 @@ class CalendarResource extends DataResource
             $date = $this->dateService->getDate($incomingDate);
 
             $result = [
-                'month_data' => $monthData,
+                'month_data' => $this->scrubMonthData($monthData),
                 'base_date' => $incomingDate,
                 'month' => $date->format('F'),
                 'year' => $date->format('Y')
@@ -67,5 +67,24 @@ class CalendarResource extends DataResource
         }
 
         return $date ?? Carbon::now(config('app.timezone'))->format('Y-m-d');
+    }
+
+    protected function scrubMonthData(array $monthData): array
+    {
+        $_monthData = $monthData;
+
+        foreach ($_monthData as $wkey => $week) {
+            foreach ($week as $dkey => $day) {
+                foreach ($day['events'] as $ekey => $event) {
+                    $_event = $event->toArray();
+
+                    unset($_event['pivot']);
+
+                    $monthData[$wkey][$dkey]['events'][$ekey] = $_event;
+                }
+            }
+        }
+
+        return $monthData;
     }
 }

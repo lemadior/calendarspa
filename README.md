@@ -3,9 +3,9 @@
 NOTE: For startup need to be installed docker, docker-compose, composer, node
 
 1. Clone (or unpack) project:
-```git clone git@github.com:lemadior/calendarspa.git store```
+```git clone git@github.com:lemadior/calendarspa.git calendar```
 
-cd to the ./store
+cd to the ./calendar
 
 2. Copy ```.env.exapmle``` to the ```.env```
 

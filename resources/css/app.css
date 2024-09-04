@@ -284,7 +284,6 @@
     .day_events_edit_form_delete {
         @apply btn bg-red-600 hover:bg-red-400 text-white mx-6 mt-6;
     }
-
 }
 
 
@@ -311,7 +310,6 @@
 }
 
 .btn {
-    /* max-width: fit-content; */
     font-weight: 700;
     padding-block: 6px;
     padding-inline: 14px;
@@ -336,10 +334,7 @@ th {
     padding-block: 18px 16px;
     font-family: 'RobotoRegular';
     font-size: 70px;
-
     border-radius: 5px;
-    /* color: cadetblue; */
-
     cursor: pointer;
     display: inline-block;
     width: 120px;
@@ -391,7 +386,6 @@ th {
     height: 15px;
     color: white;
     padding: 4px 16px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -402,7 +396,6 @@ th {
     line-height: 10px;
     font-family: sans-serif;
 }
-
 
 .event {
     right: 0;
@@ -429,15 +422,12 @@ th {
     font-family: 'RobotoLight';
 }
 
-
 .event_data a:nth-child(odd) {
     background: rgb(252, 252, 255);
 }
 
 .event_data a:hover {
-    /* color: white; */
     background-color: rgb(237 239 251);
-    /* font-weight: 700; */
 }
 
 .day_events_table_row {

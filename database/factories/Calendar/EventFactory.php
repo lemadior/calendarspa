@@ -39,7 +39,7 @@ class EventFactory extends Factory
         // Minimal duration (15 minutes in seconds)
         $minDuration = 15 * 60;
 
-        // Maximal duration (4 hours in seconds)
+        // Maximum duration (4 hours in seconds)
         $maxDuration = 4 * 60 * 60;
 
         // Get random duration in seconds

@@ -44,6 +44,13 @@ use Tymon\JWTAuth\Facades\JWTAuth;
  */
 class AuthController extends Controller
 {
+    /**
+     * Get User Token (used for switching Month or Year for Calendar Page)
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
     public function getUserToken(Request $request)
     {
         $user = auth()->user();

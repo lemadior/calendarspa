@@ -29,7 +29,7 @@ class EventFactory extends Factory
             'type_id' => fake()->randomElement($types)['id'],
             'status_id' => fake()->randomElement($statuses)['id'],
             'description' => fake()->paragraph(2, true),
-            'date' => fake()->dateTimeThisMonth()
+            'date' => fake()->dateTimeThisMonth('+30 days')
         ];
     }
 

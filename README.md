@@ -14,7 +14,7 @@ cd to the ./store
         DB_CONNECTION=mysql
         DB_HOST=db
         DB_PORT=3306
-        DB_DATABASE=teststore
+        DB_DATABASE=calendar
         DB_USERNAME=<username>
         DB_PASSWORD=<user_password>
         DB_ROOT_PASSWORD=<root_password>
@@ -49,7 +49,7 @@ Update the node modules:
 
 ```docker exec -it app php artisan migrate --seed```
 
-**NOTE**: the seeder will create only test user for testing purpose.
+**NOTE**: the seeder will create only test user for testing purpose. Also it create small data set for current month and past month.
 
 Test User credentials:
 
@@ -58,7 +58,7 @@ Test User credentials:
 
 **IMPORTANT:** Don't forget delete or change guest user's credentials after testing.
 
-10.  Create new key for JWT token:
+10.  Create new secret key for JWT token:
 
 ```docker exec -it app php artisan jwt:secret```
 
